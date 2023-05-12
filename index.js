@@ -1,12 +1,32 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const Blog = require('./models/Blog');
+
+mongoose.connect('mongodb://127.0.0.1:27017/cleanblog-test-db', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 
-const blog = { id: 1, title: 'Blog title', description: 'Blog description' };
+app.set('view engine', 'ejs');
+
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+const port = 3001;
+app.listen(port, () => {
+  console.log(`Sunucu ${port} portunda çalışıyor...`);
+});
 
 //ROUTES
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  const blogs = await Blog.find({});
+  console.log(blogs);
+  res.render('index', {
+    blogs
+  });
 });
 
 app.get('/about', (req, res) => {
@@ -17,11 +37,25 @@ app.get('/add', (req, res) => {
   res.render('add_post');
 });
 
-app.set('view engine', 'ejs');
-
-app.use(express.static('public'));
-
-const port = 3001;
-app.listen(port, () => {
-  console.log(`Sunucu ${port} portunda çalışıyor...`);
+app.post('/blogs', async (req, res) => {
+  const addBLog = async (newTitle, newDetail) => {
+    await Blog.create({title: newTitle, detail: newDetail,});
+  };
+  addBLog(req.body.title, req.body.detail);
+  res.redirect('/');
 });
+
+// const showData = async () => {
+//   const data = await Blog.find({})
+//   console.log(data)
+// }
+
+// const addData = async () => {
+//   await Blog.create({
+//     title: "Blog 2",
+//     detail: "İkinci blog yazım da çok güsel"
+//   })
+//   showData();
+// }
+
+// addData()
