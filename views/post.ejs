@@ -21,6 +21,15 @@
     </div>
   </header>
 
+  <div class="tm-bg-gray d-flex justify-content-around">
+    <div class="text-center">
+      <a href="/post/edit/<%= blog._id %>" class="btn btn-primary p-2 mb-4 tm-btn-animate tm-btn-download tm-icon-download"><span>Update Details</span></a>	
+    </div>	
+    <div class="text-center">
+      <a href="/post/<%= blog._id %>?_method=DELETE" onclick="return confirm('Are you sure?')" class="btn btn-danger  p-2 tm-btn-animate tm-btn-download tm-icon-download"><span>Delete Blog</span></a>	
+    </div>								
+  </div>
+
   <!-- Post Content -->
   <article>
     <div class="container">
