@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 mongoose
   .connect(
-    'mongodb+srv://tolgazorlu17:gA2YAyU1A7JulzMp@cluster0.vtnj3mg.mongodb.net/?retryWrites=true&w=majority',
+    '',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
